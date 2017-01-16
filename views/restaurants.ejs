@@ -1,0 +1,15 @@
+<% include partials/header %>
+
+<h1>Все рестораны</h1>
+
+<% restaurants.forEach((restaurant) => { %>
+    <div>
+        <h3><%= restaurant.name %></h3>
+        <p><%= restaurant.adress %></p>
+        <p><%= restaurant.cuisine %></p>
+        <p>Вместимость: <%= restaurant.capacity %></p>
+        <img src="<%= restaurant.image %>" alt="<%= restaurant.altText %>">
+    </div>
+<% }); %>
+
+<% include partials/footer %>
