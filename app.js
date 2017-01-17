@@ -1,6 +1,6 @@
 'use strict';
 
-var express = require('express'),
+let express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     dburl = process.env.DATABASEURL || 'mongodb://localhost/restaurants-guide',
@@ -15,46 +15,73 @@ mongoose.connect(dburl, function(err, db){
     }
 });
 
+// SCHEMA
+let restaurantSchema = new mongoose.Schema({
+    name: String,
+    adress: String,
+    image: String,
+    capacity: Number,
+    description: String,
+    cuisine: String
+});
+
+let Restaurant = mongoose.model('Restaurant', restaurantSchema);
+
+// Restaurant.create({
+//     name: 'Сытый Дракон',
+//                 adress: 'ул.Пряностей д.11',
+//                 image: 'assets/img/china.jpg',
+//                 capacity: 30,
+//                 cuisine: 'китайская кухня',
+//                 description: 'Равным образом реализация намеченных плановых заданий влечет за собой процесс внедрения и модернизации позиций, занимаемых участниками в отношении поставленных задач. Равным образом реализация намеченных плановых заданий требуют от нас анализа системы обучения кадров, соответствует насущным потребностям. Не следует, однако забывать, что постоянное информационно-пропагандистское обеспечение нашей деятельности позволяет оценить значение форм развития. Не следует, однако забывать, что дальнейшее развитие различных форм деятельности требуют определения и уточнения форм развития. Повседневная практика показывает, что дальнейшее развитие различных форм деятельности требуют от нас анализа соответствующий условий активизации. Значимость этих проблем настолько очевидна, что рамки и место обучения кадров способствует подготовки и реализации позиций, занимаемых участниками в отношении поставленных задач.'
+// }, function(err, restaurant){
+//     if(err){
+//         console.error(err);
+//     } else {
+//         console.log('New restaurant added..');
+//         console.log(restaurant);
+//     }
+// });
+
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-var restaurants = [
-            {
-                name: 'Пальчики Оближешь',
-                adress: 'ул.Вкусная д.42',
-                image: 'assets/img/family.jpg',
-                altText: 'https://unsplash.com/photos/y3aP9oo9Pjc',
-                capacity: 40,
-                cuisine: 'семейный ресторан'
-            },
-            {
-                name: 'Италиано',
-                adress: 'ул.Хрустящая д.18',
-                image: 'assets/img/pizza.jpg',
-                altText: 'https://unsplash.com/search/food?photo=YJSOou0wt8c',
-                capacity: 20,
-                cuisine: 'пиццерия'
-            },
-            {
-                name: 'Сладкоежка',
-                adress: 'пр-т.Шоколадный д.7',
-                image: 'assets/img/cookies.jpg',
-                altText: 'https://unsplash.com/photos/oLHk_WLupSc',
-                capacity: 15,
-                cuisine: 'десерты'
-            },
-            {
-                name: 'Сытый Дракон',
-                adress: 'ул.Пряностей д.11',
-                image: 'assets/img/china.jpg',
-                altText: 'https://unsplash.com/photos/KhUCBmQKl-Q',
-                capacity: 30,
-                cuisine: 'китайская кухня'
-            }
-        ]
-
-
+// var restaurants = [
+//             {
+//                 name: 'Пальчики Оближешь',
+//                 adress: 'ул.Вкусная д.42',
+//                 image: 'assets/img/family.jpg',
+//                 capacity: 40,
+//                 cuisine: 'семейный ресторан',
+//                 description: 'Повседневная практика показывает, что сложившаяся структура организации влечет за собой процесс внедрения и модернизации существенных финансовых и административных условий. Задача организации, в особенности же постоянное информационно-пропагандистское обеспечение нашей деятельности обеспечивает широкому кругу (специалистов) участие в формировании направлений прогрессивного развития.'
+//             },
+//             {
+//                 name: 'Италиано',
+//                 adress: 'ул.Хрустящая д.18',
+//                 image: 'assets/img/pizza.jpg',
+//                 capacity: 20,
+//                 cuisine: 'пиццерия',
+//                 description: 'Идейные соображения высшего порядка, а также укрепление и развитие структуры обеспечивает широкому кругу (специалистов) участие в формировании направлений прогрессивного развития. Не следует, однако забывать, что постоянное информационно-пропагандистское обеспечение нашей деятельности обеспечивает широкому кругу (специалистов) участие в формировании модели развития.'
+//             },
+//             {
+//                 name: 'Сладкоежка',
+//                 adress: 'пр-т.Шоколадный д.7',
+//                 image: 'assets/img/cookies.jpg',
+//                 capacity: 15,
+//                 cuisine: 'десерты',
+//                 description: 'С другой стороны постоянное информационно-пропагандистское обеспечение нашей деятельности в значительной степени обуславливает создание форм развития. Повседневная практика показывает, что реализация намеченных плановых заданий требуют от нас анализа дальнейших направлений развития. Разнообразный и богатый опыт консультация с широким активом представляет собой интересный эксперимент проверки существенных финансовых и административных условий. С другой стороны постоянный количественный рост и сфера нашей активности требуют определения и уточнения позиций, занимаемых участниками в отношении поставленных задач. Равным образом рамки и место обучения кадров способствует подготовки и реализации модели развития. Задача организации, в особенности же постоянное информационно-пропагандистское обеспечение нашей деятельности в значительной степени обуславливает создание направлений прогрессивного развития.'
+//             },
+//             {
+//                 name: 'Сытый Дракон',
+//                 adress: 'ул.Пряностей д.11',
+//                 image: 'assets/img/china.jpg',
+//                 capacity: 30,
+//                 cuisine: 'китайская кухня',
+//                 description: 'Равным образом реализация намеченных плановых заданий влечет за собой процесс внедрения и модернизации позиций, занимаемых участниками в отношении поставленных задач. Равным образом реализация намеченных плановых заданий требуют от нас анализа системы обучения кадров, соответствует насущным потребностям. Не следует, однако забывать, что постоянное информационно-пропагандистское обеспечение нашей деятельности позволяет оценить значение форм развития. Не следует, однако забывать, что дальнейшее развитие различных форм деятельности требуют определения и уточнения форм развития. Повседневная практика показывает, что дальнейшее развитие различных форм деятельности требуют от нас анализа соответствующий условий активизации. Значимость этих проблем настолько очевидна, что рамки и место обучения кадров способствует подготовки и реализации позиций, занимаемых участниками в отношении поставленных задач.'
+//             }
+//         ]
 
 app.get('/', function(req, res){
     res.render('landing');
@@ -62,7 +89,13 @@ app.get('/', function(req, res){
 
 app.route('/restaurants')
     .get(function(req, res){
-        res.render('restaurants', {restaurants: restaurants}); 
+        Restaurant.find({}, function(err, allRestaurants){
+            if(err){
+                console.error(err);
+            } else {
+                res.render('index', {restaurants: allRestaurants});
+            }
+        });
     })
     .post(function(req, res){
         let newRestaurant = {};
@@ -70,14 +103,32 @@ app.route('/restaurants')
         newRestaurant.adress = req.body.adress;
         newRestaurant.cuisine = req.body.cuisine;
         newRestaurant.capacity = req.body.capacity;
+        newRestaurant.description = req.body.description;
         newRestaurant.image = req.body.image;
-        restaurants.push(newRestaurant);
-        res.redirect('/restaurants');
+        
+        Restaurant.create(newRestaurant, function(err, createdRestaurant){
+            if(err){
+                console.error(err);
+            } else {
+                res.redirect('/restaurants');
+            }
+        });
     });
 
 app.get('/restaurants/new', function(req, res){
     res.render('new.ejs');
 });
+
+app.get('/restaurants/:id', function(req, res){
+    Restaurant.findById(req.params.id, function(err, foundRestaurant){
+        if(err){
+            console.error(err);
+        } else {
+            res.render('show', {restaurant: foundRestaurant});
+        }
+    });
+});
+
 
 app.listen(process.env.PORT || 3000, function(){
     console.log('Server started...');
