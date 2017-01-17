@@ -1,0 +1,32 @@
+<% include partials/header %>
+
+<div class="container">
+    <div class="row">
+        <h1 class="text-center">Добавить новый ресторан</h1>
+        <div style="width: 30%; margin: 0 auto;">
+            <form action="/restaurants" method="POST">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="name" placeholder="название">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="adress" placeholder="адрес">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="cuisine" placeholder="кухня">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="number" name="capacity" placeholder="вместимость">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="image" placeholder="ссылка на фото">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-lg btn-info btn-block">Отправить</button>
+                </div>
+            </form>
+             <a href="/restaurants">Список ресторанов</a>
+        </div>
+    </div>
+</div>
+
+<% include partials/footer %>

@@ -1,15 +1,33 @@
 <% include partials/header %>
 
-<h1>Все рестораны</h1>
 
-<% restaurants.forEach((restaurant) => { %>
-    <div>
-        <h3><%= restaurant.name %></h3>
-        <p><%= restaurant.adress %></p>
-        <p><%= restaurant.cuisine %></p>
-        <p>Вместимость: <%= restaurant.capacity %></p>
-        <img src="<%= restaurant.image %>" alt="<%= restaurant.altText %>">
-    </div>
-<% }); %>
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Лучшие рестораны города.</h1>
+            <p>Зарегистрируйся и добавь свое любимое место.</p>
+            <p>
+                <a class="btn btn-primary btn-large" href="/restaurants/new">Добавить новый ресторан</a>
+            </p>
+       </div>
+    </header>
+
+    <div class="row" style="display:flex; flex-wrap: wrap;">
+        <% restaurants.forEach((restaurant) => { %>
+            <div class="col-md-4 col-sm-6">
+                <div class="thumbnail">
+                    <img src="<%= restaurant.image %>" alt="<%= restaurant.altText %>">
+                    <div class="caption">
+                        <h3><%= restaurant.name %></h3>
+                        <p><%= restaurant.adress %></p>
+                        <p>Кухня: <%= restaurant.cuisine %></p>
+                        <p>Вместимость: <%= restaurant.capacity %></p>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>   
+</div>
 
 <% include partials/footer %>
