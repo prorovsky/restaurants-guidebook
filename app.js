@@ -3,6 +3,9 @@
 let express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local'),
+    User = require('./models/user'),
     Restaurant = require('./models/restaurant'),
     Comment = require('./models/comment'),
     dburl = process.env.DATABASEURL || 'mongodb://localhost/restaurants-guide',
@@ -18,27 +21,15 @@ mongoose.connect(dburl, function(err, db){
     }
 });
 
-// Restaurant.create({
-//     name: 'Сытый Дракон',
-//                 adress: 'ул.Пряностей д.11',
-//                 image: 'assets/img/china.jpg',
-//                 capacity: 30,
-//                 cuisine: 'китайская кухня',
-//                 description: 'Равным образом реализация намеченных плановых заданий влечет за собой процесс внедрения и модернизации позиций, занимаемых участниками в отношении поставленных задач. Равным образом реализация намеченных плановых заданий требуют от нас анализа системы обучения кадров, соответствует насущным потребностям. Не следует, однако забывать, что постоянное информационно-пропагандистское обеспечение нашей деятельности позволяет оценить значение форм развития. Не следует, однако забывать, что дальнейшее развитие различных форм деятельности требуют определения и уточнения форм развития. Повседневная практика показывает, что дальнейшее развитие различных форм деятельности требуют от нас анализа соответствующий условий активизации. Значимость этих проблем настолько очевидна, что рамки и место обучения кадров способствует подготовки и реализации позиций, занимаемых участниками в отношении поставленных задач.'
-// }, function(err, restaurant){
-//     if(err){
-//         console.error(err);
-//     } else {
-//         console.log('New restaurant added..');
-//         console.log(restaurant);
-//     }
-// });
-
+app.use(require('express-session')({
+    secret: 
+}));
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
+// routes
 app.get('/', function(req, res){
     res.render('landing');
 });
@@ -105,7 +96,6 @@ app.post('/restaurants/:id/comments', function(req, res){
         }
     });
 });
-
 
 app.listen(process.env.PORT || 3000, function(){
     console.log('Server started...');
