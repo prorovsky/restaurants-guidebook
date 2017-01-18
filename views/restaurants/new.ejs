@@ -1,4 +1,4 @@
-<% include partials/header %>
+<% include ../partials/header %>
 
 <div class="container">
     <div class="row">
@@ -6,22 +6,22 @@
         <div style="width: 30%; margin: 0 auto;">
             <form action="/restaurants" method="POST">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="name" placeholder="название">
+                    <input class="form-control" type="text" name="restaurant[name]" placeholder="название">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="adress" placeholder="адрес">
+                    <input class="form-control" type="text" name="restaurant[adress]" placeholder="адрес">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="cuisine" placeholder="кухня">
+                    <input class="form-control" type="text" name="restaurant[cuisine]" placeholder="кухня">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="number" name="capacity" placeholder="вместимость">
+                    <input class="form-control" type="number" name="restaurant[capacity]" placeholder="вместимость">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="description" placeholder="Текст о ресторане">
+                    <input class="form-control" type="text" name="restaurant[description]" placeholder="Текст о ресторане">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="image" placeholder="ссылка на фото">
+                    <input class="form-control" type="text" name="restaurant[image]" placeholder="ссылка на фото">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-info btn-block">Отправить</button>
@@ -32,4 +32,4 @@
     </div>
 </div>
 
-<% include partials/footer %>
+<% include ../partials/footer %>

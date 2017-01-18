@@ -4,11 +4,12 @@ let express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     Restaurant = require('./models/restaurant'),
+    Comment = require('./models/comment'),
     dburl = process.env.DATABASEURL || 'mongodb://localhost/restaurants-guide',
     seedDB = require('./seeds'),
     app = express();
 
-seedDB();
+// seedDB();
 mongoose.connect(dburl, function(err, db){
     if(err){
         console.error(err);
@@ -38,8 +39,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-
-
 app.get('/', function(req, res){
     res.render('landing');
 });
@@ -50,20 +49,12 @@ app.route('/restaurants')
             if(err){
                 console.error(err);
             } else {
-                res.render('index', {restaurants: allRestaurants});
+                res.render('restaurants/index', {restaurants: allRestaurants});
             }
         });
     })
     .post(function(req, res){
-        let newRestaurant = {};
-        newRestaurant.name = req.body.name;
-        newRestaurant.adress = req.body.adress;
-        newRestaurant.cuisine = req.body.cuisine;
-        newRestaurant.capacity = req.body.capacity;
-        newRestaurant.description = req.body.description;
-        newRestaurant.image = req.body.image;
-        
-        Restaurant.create(newRestaurant, function(err, createdRestaurant){
+        Restaurant.create(req.body.restaurant, function(err, createdRestaurant){
             if(err){
                 console.error(err);
             } else {
@@ -73,7 +64,7 @@ app.route('/restaurants')
     });
 
 app.get('/restaurants/new', function(req, res){
-    res.render('new.ejs');
+    res.render('restaurants/new');
 });
 
 app.get('/restaurants/:id', function(req, res){
@@ -81,7 +72,36 @@ app.get('/restaurants/:id', function(req, res){
         if(err){
             console.error(err);
         } else {
-            res.render('show', {restaurant: foundRestaurant});
+            res.render('restaurants/show', {restaurant: foundRestaurant});
+        }
+    });
+});
+
+// comments routes
+app.get('/restaurants/:id/comments/new', function(req, res){
+    Restaurant.findById(req.params.id, function(err, restaurant){
+        if(err){
+            console.error(err);
+        } else {
+            res.render('comments/new', {restaurant: restaurant});
+        }
+    });
+});
+
+app.post('/restaurants/:id/comments', function(req, res){
+    Restaurant.findById(req.params.id, function(err, restaurant){
+        if(err){
+            console.log(err);
+        } else {
+            Comment.create(req.body.comment, function(err, comment){
+                if(err){
+                    console.log(err);
+                } else {
+                    restaurant.comments.push(comment);
+                    restaurant.save();
+                    res.redirect(`/restaurants/${restaurant._id}`);
+                }
+            });
         }
     });
 });
