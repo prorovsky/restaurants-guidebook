@@ -15,7 +15,16 @@ router.get('/', function(req, res){
 });
 
 router.post('/', isLoggedIn, function(req, res){
-    Restaurant.create(req.body.restaurant, function(err, createdRestaurant){
+    let author = {
+        id: req.user._id,
+        username: req.user.username
+    };
+
+    let newRestaurant = {} 
+        newRestaurant = req.body.restaurant;
+        newRestaurant.author = author;
+    
+    Restaurant.create(newRestaurant, function(err, createdRestaurant){
         if(err){
             console.error(err);
         } else {
