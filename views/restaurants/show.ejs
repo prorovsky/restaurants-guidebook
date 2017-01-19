@@ -14,7 +14,7 @@
             <div class="thumbnail">
                 <img class="img-responsive" src="<%= restaurant.image %>">
                 <div class="caption-full">
-                    <h4 class="pull-right">Cредний заказ <strong>50BYN</strong></h4>
+                    <h4 class="pull-right">В среднем <strong>50BYN</strong></h4>
                     <h3><%= restaurant.name %></h3>
                     <p><%= restaurant.description %></p>
                 </div>
@@ -27,7 +27,7 @@
                 <% restaurant.comments.forEach((comment) => { %>
                     <div class="row">
                         <div class="col-md-12">
-                            <strong><%= comment.author %></strong> 
+                            <strong><%= comment.author.username %></strong> 
                             <span class="pull-right">10 дней назад</span>
                             <p><%= comment.text %></p>
                         </div>

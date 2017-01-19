@@ -4,25 +4,25 @@ let express = require('express'),
     Restaurant = require('../models/restaurant'),
     router = express.Router();
 
-router.route('/')
-    .get(function(req, res){
-        Restaurant.find({}, function(err, allRestaurants){
-            if(err){
-                console.error(err);
-            } else {
-                res.render('restaurants/index', {restaurants: allRestaurants});
-            }
-        });
-    })
-    .post(function(req, res){
-        Restaurant.create(req.body.restaurant, function(err, createdRestaurant){
-            if(err){
-                console.error(err);
-            } else {
-                res.redirect('/');
-            }
-        });
+router.get('/', function(req, res){
+    Restaurant.find({}, function(err, allRestaurants){
+        if(err){
+            console.error(err);
+        } else {
+            res.render('restaurants/index', {restaurants: allRestaurants});
+        }
     });
+});
+
+router.post('/', isLoggedIn, function(req, res){
+    Restaurant.create(req.body.restaurant, function(err, createdRestaurant){
+        if(err){
+            console.error(err);
+        } else {
+            res.redirect('/restaurants');
+        }
+    });
+});
 
 router.get('/new', isLoggedIn, function(req, res){
     res.render('restaurants/new');

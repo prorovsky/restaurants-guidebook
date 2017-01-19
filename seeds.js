@@ -38,30 +38,30 @@ let data = [
 ]
 
 function seedDB(){
-    Restaurant.remove({}, (err) => {
-        if(err){
-            console.error(err);
-        }
-        console.log('Database empty...');
-        data.forEach((seed) => {
-            Restaurant.create(seed, (err, createdRestaurant) => {
-                if(err){
-                    console.error(err);
-                } else {
-                    console.log('added a restaurant');
-                    Comment.create({ text: 'Все было вкусно!', author: 'Аноним'}, (err, comment) => {
-                        if(err){
-                            console.error(err);
-                        } else {
-                            createdRestaurant.comments.push(comment);
-                            createdRestaurant.save();
-                            console.log('Comment created...');
-                        }
-                    });
-                }
-            });
-        });
-    });
+    // Restaurant.remove({}, (err) => {
+    //     if(err){
+    //         console.error(err);
+    //     }
+    //     console.log('Database empty...');
+    //     data.forEach((seed) => {
+    //         Restaurant.create(seed, (err, createdRestaurant) => {
+    //             if(err){
+    //                 console.error(err);
+    //             } else {
+    //                 console.log('added a restaurant');
+    //                 Comment.create({ text: 'Все было вкусно!', author: 'Аноним'}, (err, comment) => {
+    //                     if(err){
+    //                         console.error(err);
+    //                     } else {
+    //                         createdRestaurant.comments.push(comment);
+    //                         createdRestaurant.save();
+    //                         console.log('Comment created...');
+    //                     }
+    //                 });
+    //             }
+    //         });
+    //     });
+    // });
     
 }
 
