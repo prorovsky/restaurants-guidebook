@@ -47,20 +47,13 @@ router.get('/:id', function(req, res){
     });
 });
 
-router.get('/:id/edit', function(req, res){
-    if(req.isAuthenticated()){
-        
-    }
+router.get('/:id/edit', checkOwner, function(req, res){
     Restaurant.findById(req.params.id, function(err, foundRestaurant){
-        if(err){
-            res.redirect('/restaurants');
-        } else {
-            res.render('restaurants/edit', {restaurant: foundRestaurant});
-        }
+        res.render('restaurants/edit', {restaurant: foundRestaurant});
     });
 });
 
-router.put('/:id', function(req, res){
+router.put('/:id', checkOwner, function(req, res){
     Restaurant.findByIdAndUpdate(req.params.id, req.body.restaurant, function(err, updatedRestaurant){
         if(err){
             res.redirect('/restaurants');
@@ -70,7 +63,7 @@ router.put('/:id', function(req, res){
     });
 });
 
-router.delete('/:id', function(req, res){
+router.delete('/:id', checkOwner, function(req, res){
     Restaurant.findByIdAndRemove(req.params.id, function(err){
         if(err){
             res.redirect('/restaurants');
@@ -84,6 +77,24 @@ function isLoggedIn(req, res, next){
         return next();
     }
     res.redirect('/login');
+}
+
+function checkOwner(req, res, next){
+    if(req.isAuthenticated()){
+        Restaurant.findById(req.params.id, function(err, foundRestaurant){
+            if(err){
+                res.redirect('back');
+            } else {
+                if(foundRestaurant.author.id.equals(req.user._id)){
+                    next();
+                } else {
+                    res.redirect('back');
+                }
+            }
+        });
+    } else {
+        res.redirect('back');
+    }
 }
 
 module.exports = router;
