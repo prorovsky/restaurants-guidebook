@@ -17,10 +17,11 @@ router.post('/register', function(req, res){
     let newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, function(err, user){
         if(err){
-            console.error(err);
-            return res.render('register');
+            req.flash('error', err.message);
+            res.redirect('/register');
         }
         passport.authenticate('local')(req, res, function(){
+            req.flash('success', `Добро пожаловать в Вкусно Пахнет, ${user.username}`);
             res.redirect('/restaurants');
         });
     });
@@ -38,6 +39,7 @@ router.post('/login', passport.authenticate('local',
 
 router.get('/logout', function(req, res){
     req.logout();
+    req.flash('success', 'Вы вышли из системы');
     res.redirect('/restaurants');
 });
 

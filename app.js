@@ -9,6 +9,7 @@ let express = require('express'),
     Restaurant = require('./models/restaurant'),
     Comment = require('./models/comment'),
     methodOverride = require('method-override'),
+    flash = require('connect-flash'),
     config = require('./config'),
     dburl = process.env.DATABASEURL || 'mongodb://localhost/restaurants-guide',
     seedDB = require('./seeds'),
@@ -39,13 +40,17 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
 app.set('view engine', 'ejs');
+app.use(flash());
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash('error');
+    res.locals.success = req.flash('success');
     next();
 });
 

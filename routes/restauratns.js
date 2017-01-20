@@ -50,6 +50,7 @@ router.get('/:id', function(req, res){
 
 router.get('/:id/edit', middleware.checkRestaurantOwner, function(req, res){
     Restaurant.findById(req.params.id, function(err, foundRestaurant){
+        
         res.render('restaurants/edit', {restaurant: foundRestaurant});
     });
 });
@@ -72,30 +73,5 @@ router.delete('/:id', middleware.checkRestaurantOwner, function(req, res){
         res.redirect('/restaurants');
     })
 });
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect('/login');
-}
-
-function checkOwner(req, res, next){
-    if(req.isAuthenticated()){
-        Restaurant.findById(req.params.id, function(err, foundRestaurant){
-            if(err){
-                res.redirect('back');
-            } else {
-                if(foundRestaurant.author.id.equals(req.user._id)){
-                    next();
-                } else {
-                    res.redirect('back');
-                }
-            }
-        });
-    } else {
-        res.redirect('back');
-    }
-}
 
 module.exports = router;

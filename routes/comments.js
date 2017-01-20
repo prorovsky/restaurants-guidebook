@@ -20,7 +20,7 @@ router.get('/new', middleware.isLoggedIn, function(req, res){
 router.post('/', middleware.isLoggedIn, function(req, res){
     Restaurant.findById(req.params.id, function(err, restaurant){
         if(err){
-            console.log(err);
+            console.error(err);
         } else {
             Comment.create(req.body.comment, function(err, comment){
                 if(err){
@@ -31,6 +31,7 @@ router.post('/', middleware.isLoggedIn, function(req, res){
                     comment.save();
                     restaurant.comments.push(comment);
                     restaurant.save();
+                    req.flash('success', 'Комментарий добавлен.');
                     res.redirect(`/restaurants/${restaurant._id}`);
                 }
             });
@@ -63,34 +64,10 @@ router.delete('/:comment_id', middleware.checkCommentOwner, function(req, res){
         if(err){
             res.redirect('back');
         } else {
+            req.flash('success', 'Комментарий удален');
             res.redirect(`/restaurants/${req.params.id}`);
         }
     });
 });
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect('/login');
-}
-
-function checkCommentOwner(req, res, next){
-    if(req.isAuthenticated()){
-        Comment.findById(req.params.comment_id, function(err, foundComment){
-            if(err){
-                res.redirect('back');
-            } else {
-                if(foundComment.author.id.equals(req.user._id)){
-                    next();
-                } else {
-                    res.redirect('back');
-                }
-            }
-        });
-    } else {
-        res.redirect('back');
-    }
-}
 
 module.exports = router;
