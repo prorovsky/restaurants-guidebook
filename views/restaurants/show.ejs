@@ -37,6 +37,10 @@
                             <strong><%= comment.author.username %></strong> 
                             <span class="pull-right">10 дней назад</span>
                             <p><%= comment.text %></p>
+                            <a class="btn btn-xs btn-warning" 
+                                href="/restaurants/<%= restaurant._id %>/comments/<%= comment._id %>/edit">
+                                Редактировать
+                            </a>
                         </div>
                     </div>   
                 <% }); %>
