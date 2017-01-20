@@ -2,6 +2,7 @@
 
 let express = require('express'),
     Restaurant = require('../models/restaurant'),
+    middleware = require('../middleware'),
     router = express.Router();
 
 router.get('/', function(req, res){
@@ -14,7 +15,7 @@ router.get('/', function(req, res){
     });
 });
 
-router.post('/', isLoggedIn, function(req, res){
+router.post('/', middleware.isLoggedIn, function(req, res){
     let author = {
         id: req.user._id,
         username: req.user.username
@@ -33,7 +34,7 @@ router.post('/', isLoggedIn, function(req, res){
     });
 });
 
-router.get('/new', isLoggedIn, function(req, res){
+router.get('/new', middleware.isLoggedIn, function(req, res){
     res.render('restaurants/new');
 });
 
@@ -47,13 +48,13 @@ router.get('/:id', function(req, res){
     });
 });
 
-router.get('/:id/edit', checkOwner, function(req, res){
+router.get('/:id/edit', middleware.checkRestaurantOwner, function(req, res){
     Restaurant.findById(req.params.id, function(err, foundRestaurant){
         res.render('restaurants/edit', {restaurant: foundRestaurant});
     });
 });
 
-router.put('/:id', checkOwner, function(req, res){
+router.put('/:id', middleware.checkRestaurantOwner, function(req, res){
     Restaurant.findByIdAndUpdate(req.params.id, req.body.restaurant, function(err, updatedRestaurant){
         if(err){
             res.redirect('/restaurants');
@@ -63,7 +64,7 @@ router.put('/:id', checkOwner, function(req, res){
     });
 });
 
-router.delete('/:id', checkOwner, function(req, res){
+router.delete('/:id', middleware.checkRestaurantOwner, function(req, res){
     Restaurant.findByIdAndRemove(req.params.id, function(err){
         if(err){
             res.redirect('/restaurants');
