@@ -48,6 +48,9 @@ router.get('/:id', function(req, res){
 });
 
 router.get('/:id/edit', function(req, res){
+    if(req.isAuthenticated()){
+        
+    }
     Restaurant.findById(req.params.id, function(err, foundRestaurant){
         if(err){
             res.redirect('/restaurants');
@@ -65,6 +68,15 @@ router.put('/:id', function(req, res){
             res.redirect(`/restaurants/${req.params.id}`);
         }
     });
+});
+
+router.delete('/:id', function(req, res){
+    Restaurant.findByIdAndRemove(req.params.id, function(err){
+        if(err){
+            res.redirect('/restaurants');
+        }
+        res.redirect('/restaurants');
+    })
 });
 
 function isLoggedIn(req, res, next){

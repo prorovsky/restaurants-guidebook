@@ -18,7 +18,10 @@
                     <h3><%= restaurant.name %></h3>
                     <p><%= restaurant.description %></p>
                     <em><p>Добавил <%= restaurant.author.username %></p></em>
-                    <a class="btn btn-warning" href="/restaurants/<%= restaurant._id %>/edit">Редактировать</a>
+                    <a class="btn btn-xs btn-warning" href="/restaurants/<%= restaurant._id %>/edit">Редактировать</a>
+                    <form id="delete-form" action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger">Удалить</delete>
+                    </form>
                 </div>
             </div>
             <div class="well">
