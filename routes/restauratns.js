@@ -47,6 +47,26 @@ router.get('/:id', function(req, res){
     });
 });
 
+router.get('/:id/edit', function(req, res){
+    Restaurant.findById(req.params.id, function(err, foundRestaurant){
+        if(err){
+            res.redirect('/restaurants');
+        } else {
+            res.render('restaurants/edit', {restaurant: foundRestaurant});
+        }
+    });
+});
+
+router.put('/:id', function(req, res){
+    Restaurant.findByIdAndUpdate(req.params.id, req.body.restaurant, function(err, updatedRestaurant){
+        if(err){
+            res.redirect('/restaurants');
+        } else {
+            res.redirect(`/restaurants/${req.params.id}`);
+        }
+    });
+});
+
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();
