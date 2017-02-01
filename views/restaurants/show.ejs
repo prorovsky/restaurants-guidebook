@@ -5,7 +5,7 @@
         <div class="col-md-3">
             <p class="lead">Вкусно Пахнет</p>
             <div class="list-group">
-                <li class="list-group-item active">Информация 1</li>
+                <li class="list-group-item"><a href="/restaurants/">Все рестораны</a></li>
                 <li class="list-group-item">Информация 2</li>
                 <li class="list-group-item">Информация 3</li>
             </div>
@@ -14,14 +14,14 @@
             <div class="thumbnail">
                 <img class="img-responsive" src="<%= restaurant.image %>">
                 <div class="caption-full">
-                    <h4 class="pull-right">В среднем <strong>50BYN</strong></h4>
+                    <h4 class="pull-right">В среднем <strong><%= restaurant.price %>BYN</strong></h4>
                     <h3><%= restaurant.name %></h3>
                     <p><%= restaurant.description %></p>
                     <em><p>Добавил <%= restaurant.author.username %></p></em>
                     <% if(currentUser && restaurant.author.id.equals(currentUser._id)){ %>
                         <a class="btn btn-xs btn-warning" href="/restaurants/<%= restaurant._id %>/edit">Редактировать</a>
                         <form id="delete-form" action="/restaurants/<%= restaurant._id %>?_method=DELETE" method="POST">
-                            <button class="btn btn-xs btn-danger">Удалить</delete>
+                            <button class="btn btn-xs btn-danger">Удалить</button>
                         </form>
                     <% } %>
                 </div>
@@ -34,8 +34,7 @@
                 <% restaurant.comments.forEach((comment) => { %>
                     <div class="row">
                         <div class="col-md-12">
-                            <strong><%= comment.author.username %></strong> 
-                            <span class="pull-right">10 дней назад</span>
+                            <em><%= comment.author.username %></em>
                             <p><%= comment.text %></p>
                             <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
                             <a class="btn btn-xs btn-warning" 

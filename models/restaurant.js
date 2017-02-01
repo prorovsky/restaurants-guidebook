@@ -5,6 +5,7 @@ let restaurantSchema = new mongoose.Schema({
     adress: String,
     image: String,
     capacity: Number,
+    price: Number,
     description: String,
     cuisine: String,
     author: {
