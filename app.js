@@ -19,6 +19,7 @@ let commentRoutes = require('./routes/comments'),
     restaurantRoutes = require('./routes/restauratns'),
     indexRoutes = require('./routes/index');
 
+// reset db
 // seedDB();
 mongoose.connect(dburl, function(err, db){
     if(err){

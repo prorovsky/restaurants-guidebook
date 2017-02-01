@@ -21,7 +21,7 @@ router.post('/register', function(req, res){
             res.redirect('/register');
         }
         passport.authenticate('local')(req, res, function(){
-            req.flash('success', `Добро пожаловать в Вкусно Пахнет, ${user.username}`);
+            req.flash('success', `Добро пожаловать ${user.username}`);
             res.redirect('/restaurants');
         });
     });

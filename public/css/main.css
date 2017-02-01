@@ -1,5 +1,5 @@
 body {
-    /*background: rosybrown;*/
+    font-family: 'Lobster', cursive;
 }
 
 .thumbnail img {
@@ -10,8 +10,20 @@ body {
     padding: 0;
 }
 
+.jumbotron .container, .register, .login, #start {
+    text-align: center;
+}
+
 .thumbnail .caption-full {
     padding: 10px;
+}
+
+.start-image {
+    margin: 20px;
+}
+
+#btn-more {
+    margin-left: 5px;
 }
 
 #delete-form {
