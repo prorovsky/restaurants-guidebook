@@ -16,7 +16,7 @@ let express = require('express'),
     app = express();
 
 let commentRoutes = require('./routes/comments'),
-    restaurantRoutes = require('./routes/restauratns'),
+    restaurantRoutes = require('./routes/restaurants'),
     indexRoutes = require('./routes/index');
 
 // reset db
